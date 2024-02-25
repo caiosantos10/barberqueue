@@ -3,6 +3,8 @@ package com.santos.barberqueue.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Schedule implements Serializable {
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn()
+	@JsonBackReference
 	private Queue queue;
 
 	public Schedule() {
