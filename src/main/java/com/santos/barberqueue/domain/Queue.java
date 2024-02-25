@@ -8,26 +8,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Queue implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	private List<String> customers = new ArrayList<>();
-	
+
+	@OneToMany(mappedBy="queue")
+	private List<Schedule> schedules = new ArrayList<>();
+
 	public Queue() {
-		
+
 	}
-	
+
 	public Queue(Integer id) {
 		this.id = id;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -36,17 +38,17 @@ public class Queue implements Serializable {
 		this.id = id;
 	}
 
-	public List<String> getCustomers() {
-		return customers;
+	public List<Schedule> getSchedules() {
+		return schedules;
 	}
 
-	public void setCustomers(List<String> customers) {
-		this.customers = customers;
+	public void setSchedules(List<Schedule> schedules) {
+		this.schedules = schedules;
 	}
 
 	@Override
 	public String toString() {
-		return "Queue [customers=" + customers.toString() + "]";
+		return "Queue [customers=" + schedules.toString() + "]";
 	}
-	
+
 }
