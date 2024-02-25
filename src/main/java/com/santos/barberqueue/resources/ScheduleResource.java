@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.santos.barberqueue.domain.Queue;
-import com.santos.barberqueue.services.QueueService;
+import com.santos.barberqueue.domain.Schedule;
+import com.santos.barberqueue.services.ScheduleService;
 
 @RestController
-@RequestMapping(value="/queue")
-public class QueueResource {
+@RequestMapping(value="/schedule")
+public class ScheduleResource {
 	
 	@Autowired
-	private QueueService service;
+	private ScheduleService service;
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<?> getQueue(@PathVariable Integer id) {
-		Queue obj = service.find(id);
+	public ResponseEntity<?> getSchedule(@PathVariable Integer id) {
+		Schedule obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }

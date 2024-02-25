@@ -18,7 +18,15 @@ public class Queue implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	private ArrayList<String> customers = new ArrayList<>();
+	private List<String> customers = new ArrayList<>();
+	
+	public Queue() {
+		
+	}
+	
+	public Queue(Integer id) {
+		this.id = id;
+	}
 	
 	public Integer getId() {
 		return id;
@@ -32,8 +40,8 @@ public class Queue implements Serializable {
 		return customers;
 	}
 
-	public void setCustomers(String customer) {
-		this.customers.add(customer);
+	public void setCustomers(List<String> customers) {
+		this.customers = customers;
 	}
 
 	@Override
