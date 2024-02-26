@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.santos.barberqueue.domain.Queue;
 import com.santos.barberqueue.repositories.QueueRepository;
+import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class QueueService {
@@ -15,6 +16,8 @@ public class QueueService {
 	
 	public Queue find(Integer id) {
 		Optional<Queue> queue  = repo.findById(id);
-		return queue.orElse(null);
+		
+		return queue.orElseThrow(() -> new ObjectNotFoundException(
+				"Object is not found, Id: "+ id + ", Type: " + Queue.class.getName()));
 	}
 }

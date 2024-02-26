@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.santos.barberqueue.domain.Schedule;
 import com.santos.barberqueue.repositories.ScheduleRepository;
+import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ScheduleService {
@@ -15,6 +16,8 @@ public class ScheduleService {
 	
 	public Schedule find(Integer id) {
 		Optional<Schedule> obj  = repo.findById(id);
-		return obj.orElse(null);
+		
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object is not found, Id: " + id + ", Type: " + Schedule.class.getName()));
 	}
 }
