@@ -1,9 +1,9 @@
 package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -11,7 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Schedule implements Serializable {
@@ -22,18 +23,23 @@ public class Schedule implements Serializable {
 	private Integer id;
 	private String initialTime;
 	private String endTime;
-	private String customer;
 
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@JoinColumn()
-	@JsonBackReference
-	private Queue queue;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "barber_id")
+	private Barber barber;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Service> services = new ArrayList<>();
 
 	public Schedule() {
 
 	}
 
-	public Schedule(Integer id, String initialTime, String endTime, String customer) {
+	public Schedule(Integer id, String initialTime, String endTime, Customer customer) {
 		super();
 		this.id = id;
 		this.initialTime = initialTime;
@@ -65,20 +71,20 @@ public class Schedule implements Serializable {
 		this.endTime = endTime;
 	}
 
-	public String getCustomer() {
+	public Customer getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(String customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
-	public Queue getQueue() {
-		return queue;
+	public List<Service> getServices() {
+		return services;
 	}
 
-	public void setQueue(Queue queue) {
-		this.queue = queue;
+	public void setServices(List<Service> services) {
+		this.services = services;
 	}
 
 	@Override
