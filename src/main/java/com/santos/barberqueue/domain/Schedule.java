@@ -11,8 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Schedule implements Serializable {
@@ -24,15 +24,16 @@ public class Schedule implements Serializable {
 	private String initialTime;
 	private String endTime;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="schedule_id")
 	private List<BarberShopService> services = new ArrayList<>();
 
 	public Schedule() {

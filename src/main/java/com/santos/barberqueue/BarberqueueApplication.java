@@ -52,10 +52,10 @@ public class BarberqueueApplication implements CommandLineRunner {
 		sched3.setServices(Arrays.asList(service1));
 
 		
+		barberRepo.saveAll(Arrays.asList(barber));
+		customerRepo.saveAll(Arrays.asList(customer1, customer2, customer3));
 		scheduleRepo.saveAll(Arrays.asList(sched1, sched2, sched3));
 		barberShopServiceRepo.saveAll(Arrays.asList(service1, service2));
-		customerRepo.saveAll(Arrays.asList(customer1, customer2, customer3));
-		barberRepo.saveAll(Arrays.asList(barber));
 
 	}
 
