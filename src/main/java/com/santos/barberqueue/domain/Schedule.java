@@ -27,24 +27,25 @@ public class Schedule implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Service> services = new ArrayList<>();
+	private List<BarberShopService> services = new ArrayList<>();
 
 	public Schedule() {
 
 	}
 
-	public Schedule(Integer id, String initialTime, String endTime, Customer customer) {
+	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber) {
 		super();
 		this.id = id;
 		this.initialTime = initialTime;
 		this.endTime = endTime;
 		this.customer = customer;
+		this.barber = barber;
 	}
 
 	public Integer getId() {
@@ -79,11 +80,19 @@ public class Schedule implements Serializable {
 		this.customer = customer;
 	}
 
-	public List<Service> getServices() {
+	public Barber getBarber() {
+		return barber;
+	}
+
+	public void setBarber(Barber barber) {
+		this.barber = barber;
+	}
+
+	public List<BarberShopService> getServices() {
 		return services;
 	}
 
-	public void setServices(List<Service> services) {
+	public void setServices(List<BarberShopService> services) {
 		this.services = services;
 	}
 

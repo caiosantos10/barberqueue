@@ -9,25 +9,25 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Person implements Serializable {
+public class BarberShopService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private String nickname;
-	
-	public Person() {
-		
+	private Double price;
+
+	public BarberShopService() {
+
 	}
 
-	public Person(Integer id, String name, String nickname) {
+	public BarberShopService(Integer id, String name, Double price) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.nickname = nickname;
+		this.price = price;
 	}
 
 	public Integer getId() {
@@ -46,17 +46,17 @@ public class Person implements Serializable {
 		this.name = name;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, nickname);
+		return Objects.hash(id, name, price);
 	}
 
 	@Override
@@ -67,11 +67,8 @@ public class Person implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Person other = (Person) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(nickname, other.nickname);
+		BarberShopService other = (BarberShopService) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(price, other.price);
 	}
-	
-	
-	
+
 }
