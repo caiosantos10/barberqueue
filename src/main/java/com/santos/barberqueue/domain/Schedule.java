@@ -11,8 +11,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 @Entity
 public class Schedule implements Serializable {
@@ -24,27 +24,29 @@ public class Schedule implements Serializable {
 	private String initialTime;
 	private String endTime;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+	@ManyToOne
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Service> services = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="schedule_id")
+	private List<BarberShopService> services = new ArrayList<>();
 
 	public Schedule() {
 
 	}
 
-	public Schedule(Integer id, String initialTime, String endTime, Customer customer) {
+	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber) {
 		super();
 		this.id = id;
 		this.initialTime = initialTime;
 		this.endTime = endTime;
 		this.customer = customer;
+		this.barber = barber;
 	}
 
 	public Integer getId() {
@@ -79,11 +81,19 @@ public class Schedule implements Serializable {
 		this.customer = customer;
 	}
 
-	public List<Service> getServices() {
+	public Barber getBarber() {
+		return barber;
+	}
+
+	public void setBarber(Barber barber) {
+		this.barber = barber;
+	}
+
+	public List<BarberShopService> getServices() {
 		return services;
 	}
 
-	public void setServices(List<Service> services) {
+	public void setServices(List<BarberShopService> services) {
 		this.services = services;
 	}
 
