@@ -20,13 +20,17 @@ public class Barber implements Serializable {
 	private String email;
 	private String password;
 
+	public Barber() {
+
+	}
+
 	public Barber(Integer id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -35,7 +39,6 @@ public class Barber implements Serializable {
 		this.id = id;
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -62,22 +65,19 @@ public class Barber implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(email, password);
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Barber other = (Barber) obj;
-		return Objects.equals(email, other.email) && Objects.equals(password, other.password);
+		return Objects.equals(id, other.id);
 	}
 
 }

@@ -99,7 +99,7 @@ public class Schedule implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customer, endTime, id, initialTime);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -111,8 +111,7 @@ public class Schedule implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Schedule other = (Schedule) obj;
-		return Objects.equals(customer, other.customer) && Objects.equals(endTime, other.endTime)
-				&& Objects.equals(id, other.id) && Objects.equals(initialTime, other.initialTime);
+		return Objects.equals(id, other.id);
 	}
 
 }

@@ -28,7 +28,7 @@ public class Customer implements Serializable {
 		this.name = name;
 		this.nickname = nickname;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -37,7 +37,6 @@ public class Customer implements Serializable {
 		this.id = id;
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -56,22 +55,19 @@ public class Customer implements Serializable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(nickname);
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Customer other = (Customer) obj;
-		return Objects.equals(nickname, other.nickname);
+		return Objects.equals(id, other.id);
 	}
 
 }

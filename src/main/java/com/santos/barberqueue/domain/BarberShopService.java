@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="Service")
+@Table(name = "Service")
 public class BarberShopService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +26,6 @@ public class BarberShopService implements Serializable {
 	}
 
 	public BarberShopService(Integer id, String name, Double price) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -58,7 +57,7 @@ public class BarberShopService implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, price);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class BarberShopService implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		BarberShopService other = (BarberShopService) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(price, other.price);
+		return Objects.equals(id, other.id);
 	}
 
 }
