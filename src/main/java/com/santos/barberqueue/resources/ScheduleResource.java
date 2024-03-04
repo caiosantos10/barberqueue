@@ -13,7 +13,7 @@ import com.santos.barberqueue.domain.Schedule;
 import com.santos.barberqueue.services.ScheduleService;
 
 @RestController
-@RequestMapping(value="/schedule")
+@RequestMapping(value="/schedules")
 public class ScheduleResource {
 	
 	@Autowired
