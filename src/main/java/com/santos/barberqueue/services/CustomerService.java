@@ -20,4 +20,9 @@ public class CustomerService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object is not found, Id: " + id + ", Type: " + Customer.class.getName()));
 	}
+	
+	public Customer insert(Customer customer) {
+		customer.setId(null);
+		return repo.save(customer);
+	}
 }

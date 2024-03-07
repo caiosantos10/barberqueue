@@ -10,10 +10,20 @@ import com.santos.barberqueue.domain.Schedule;
 import com.santos.barberqueue.repositories.ScheduleRepository;
 import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ScheduleService {
 	@Autowired
 	private ScheduleRepository repo;
+	
+	@Autowired
+	private BarberService barberService;
+	@Autowired
+	private BarberShopServiceService barberShopService;
+	@Autowired
+	private CustomerService customerService;
+	
 
 	public Schedule find(Integer id) {
 		Optional<Schedule> obj = repo.findById(id);
@@ -25,5 +35,14 @@ public class ScheduleService {
 	public List<Schedule> findAll() {
 		List<Schedule> obj = repo.findAll();
 		return obj;
+	}
+	
+	@Transactional
+	public Schedule insert(Schedule schedule) {
+		schedule.setId(null);
+		this.barberShopService.insertAll(schedule.getServices());
+		this.barberService.insert(schedule.getBarber());
+		this.customerService.insert(schedule.getCustomer());
+		return repo.save(schedule);
 	}
 }

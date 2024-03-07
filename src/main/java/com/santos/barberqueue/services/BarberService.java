@@ -20,4 +20,9 @@ public class BarberService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object is not found, Id: " + id + ", Type: " + Barber.class.getName()));
 	}
+	
+	public Barber insert (Barber barber) {
+		barber.setId(null);
+		return repo.save(barber);
+	}
 }
