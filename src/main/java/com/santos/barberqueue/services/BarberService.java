@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.santos.barberqueue.domain.Barber;
 import com.santos.barberqueue.repositories.BarberRepository;
+import com.santos.barberqueue.services.exceptions.DataIntegrityException;
 import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,5 +37,14 @@ public class BarberService {
 	public Barber update(Barber barber) {
 		find(barber.getId());
 		return repo.save(barber);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir este Barber");
+		}
 	}
 }
