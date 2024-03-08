@@ -25,4 +25,9 @@ public class BarberService {
 		barber.setId(null);
 		return repo.save(barber);
 	}
+	
+	public Barber update(Barber barber) {
+		find(barber.getId());
+		return repo.save(barber);
+	}
 }

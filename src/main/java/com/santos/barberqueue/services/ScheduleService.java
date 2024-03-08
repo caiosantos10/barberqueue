@@ -16,14 +16,13 @@ import jakarta.transaction.Transactional;
 public class ScheduleService {
 	@Autowired
 	private ScheduleRepository repo;
-	
+
 	@Autowired
 	private BarberService barberService;
 	@Autowired
 	private BarberShopServiceService barberShopService;
 	@Autowired
 	private CustomerService customerService;
-	
 
 	public Schedule find(Integer id) {
 		Optional<Schedule> obj = repo.findById(id);
@@ -36,13 +35,22 @@ public class ScheduleService {
 		List<Schedule> obj = repo.findAll();
 		return obj;
 	}
-	
+
 	@Transactional
 	public Schedule insert(Schedule schedule) {
 		schedule.setId(null);
 		this.barberShopService.insertAll(schedule.getServices());
 		this.barberService.insert(schedule.getBarber());
 		this.customerService.insert(schedule.getCustomer());
+		return repo.save(schedule);
+	}
+
+	@Transactional
+	public Schedule update(Schedule schedule) {
+		find(schedule.getId());
+		this.barberShopService.update(schedule.getServices());
+		this.barberService.update(schedule.getBarber());
+		this.customerService.update(schedule.getCustomer());
 		return repo.save(schedule);
 	}
 }

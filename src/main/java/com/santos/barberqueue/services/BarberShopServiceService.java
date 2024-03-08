@@ -26,4 +26,10 @@ public class BarberShopServiceService {
 		services.forEach(service -> service.setId(null));
 		return repo.saveAll(services);
 	}
+	
+	
+	public List<BarberShopService> update(List<BarberShopService> services) {
+		services.forEach(service -> find(service.getId()));
+		return repo.saveAll(services);
+	}
 }
