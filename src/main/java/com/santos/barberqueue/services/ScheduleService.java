@@ -50,7 +50,7 @@ public class ScheduleService {
 	@Transactional
 	public Schedule update(Schedule schedule) {
 		find(schedule.getId());
-		this.barberShopService.update(schedule.getServices());
+		this.barberShopService.updateAll(schedule.getServices());
 		this.barberService.update(schedule.getBarber());
 		this.customerService.update(schedule.getCustomer());
 		return repo.save(schedule);
