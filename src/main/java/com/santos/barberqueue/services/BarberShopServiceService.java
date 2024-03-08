@@ -22,6 +22,11 @@ public class BarberShopServiceService {
 				"Object is not found, Id: " + id + ", Type: " + BarberShopService.class.getName()));
 	}
 	
+	public List<BarberShopService> findAll() {
+		List<BarberShopService> obj = repo.findAll();
+		return obj;
+	}
+	
 	public List<BarberShopService> insertAll(List<BarberShopService> services) {
 		services.forEach(service -> service.setId(null));
 		return repo.saveAll(services);

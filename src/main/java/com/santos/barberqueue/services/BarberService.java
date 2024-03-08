@@ -1,5 +1,6 @@
 package com.santos.barberqueue.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class BarberService {
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object is not found, Id: " + id + ", Type: " + Barber.class.getName()));
+	}
+	
+	public List<Barber> findAll() {
+		List<Barber> obj = repo.findAll();
+		return obj;
 	}
 	
 	public Barber insert (Barber barber) {

@@ -1,5 +1,6 @@
 package com.santos.barberqueue.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class CustomerService {
 		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Object is not found, Id: " + id + ", Type: " + Customer.class.getName()));
+	}
+	
+	public List<Customer> findAll() {
+		List<Customer> obj = repo.findAll();
+		return obj;
 	}
 	
 	public Customer insert(Customer customer) {
