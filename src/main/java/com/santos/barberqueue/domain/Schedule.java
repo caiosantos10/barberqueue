@@ -3,14 +3,11 @@ package com.santos.barberqueue.domain;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.santos.barberqueue.services.exceptions.InvalidDateFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,9 +27,9 @@ public class Schedule implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@DateTimeFormat(pattern = DATE_PATTERN)
+	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime initialTime;
-	@DateTimeFormat(pattern = DATE_PATTERN)
+	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime endTime;
 
 	@ManyToOne
