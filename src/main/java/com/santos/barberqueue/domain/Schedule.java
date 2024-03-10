@@ -1,9 +1,16 @@
 package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.santos.barberqueue.services.exceptions.InvalidDateFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,12 +24,16 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String initialTime;
-	private String endTime;
+
+	@DateTimeFormat(pattern = DATE_PATTERN)
+	private LocalDateTime initialTime;
+	@DateTimeFormat(pattern = DATE_PATTERN)
+	private LocalDateTime endTime;
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -43,8 +54,8 @@ public class Schedule implements Serializable {
 	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber) {
 		super();
 		this.id = id;
-		this.initialTime = initialTime;
-		this.endTime = endTime;
+		setInitialTime(initialTime);
+		setEndTime(endTime);
 		this.customer = customer;
 		this.barber = barber;
 	}
@@ -57,20 +68,22 @@ public class Schedule implements Serializable {
 		this.id = id;
 	}
 
-	public String getInitialTime() {
+	public LocalDateTime getInitialTime() {
 		return initialTime;
 	}
 
 	public void setInitialTime(String initialTime) {
-		this.initialTime = initialTime;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+		this.initialTime = LocalDateTime.parse(initialTime, formatter);
 	}
 
-	public String getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
 	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+		this.endTime = LocalDateTime.parse(endTime, formatter);
 	}
 
 	public Customer getCustomer() {
