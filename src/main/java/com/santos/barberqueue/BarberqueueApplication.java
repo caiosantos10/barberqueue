@@ -43,6 +43,8 @@ public class BarberqueueApplication implements CommandLineRunner {
 		
 		Barber barber = new Barber(null, "Barbeiro Teste", "teste@teste.com", "123456");
 		
+		barber.setServicesOffered(Arrays.asList(service1, service2));;
+		
 		Schedule sched1 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer1, barber);
 		Schedule sched2 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer2, barber);
 		Schedule sched3 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer3, barber);

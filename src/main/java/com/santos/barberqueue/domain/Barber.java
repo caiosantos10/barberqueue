@@ -1,12 +1,17 @@
 package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 
 @Entity
 public class Barber implements Serializable {
@@ -19,6 +24,10 @@ public class Barber implements Serializable {
 	private String name;
 	private String email;
 	private String password;
+	
+	@ManyToMany
+	@JoinTable(name = "Barber_ServicesOffered", joinColumns = @JoinColumn(name = "barber_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
+	private List<BarberShopService> servicesOffered = new ArrayList<>();
 
 	public Barber() {
 
@@ -62,6 +71,15 @@ public class Barber implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public List<BarberShopService> getServicesOffered() {
+		return servicesOffered;
+	}
+
+	public void setServicesOffered(List<BarberShopService> servicesOffered) {
+		this.servicesOffered = servicesOffered;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -79,5 +97,4 @@ public class Barber implements Serializable {
 		Barber other = (Barber) obj;
 		return Objects.equals(id, other.id);
 	}
-
 }
