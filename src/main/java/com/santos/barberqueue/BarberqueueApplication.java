@@ -34,8 +34,8 @@ public class BarberqueueApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		BarberShopService service1 = new BarberShopService(null, "Cabelo", 50.00);
-		BarberShopService service2 = new BarberShopService(null, "Barba", 15.00);
+		BarberShopService service1 = new BarberShopService(null, "Cabelo", 50.00, 60);
+		BarberShopService service2 = new BarberShopService(null, "Barba", 15.00, 30);
 		
 		Customer customer1 = new Customer(null, "Caio Santos", "Caio");
 		Customer customer2 = new Customer(null, "Robson Santos", "Cacá");

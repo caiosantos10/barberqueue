@@ -29,6 +29,7 @@ public class Schedule implements Serializable {
 
 	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime initialTime;
+	
 	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime endTime;
 

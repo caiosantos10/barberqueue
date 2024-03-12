@@ -1,6 +1,7 @@
 package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -20,15 +21,17 @@ public class BarberShopService implements Serializable {
 	private Integer id;
 	private String name;
 	private Double price;
+	private Duration duration;
 
 	public BarberShopService() {
 
 	}
 
-	public BarberShopService(Integer id, String name, Double price) {
+	public BarberShopService(Integer id, String name, Double price, Integer duration) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
+		setDuration(duration);
 	}
 
 	public Integer getId() {
@@ -53,6 +56,13 @@ public class BarberShopService implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	public Duration getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Integer duration) {
+		this.duration = Duration.ofMinutes(duration);
 	}
 
 	@Override
