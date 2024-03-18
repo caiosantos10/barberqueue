@@ -17,30 +17,36 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
 	private final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@NotNull(message = "initial cannot be null")
 	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime initialTime;
 	
 	@JsonFormat(pattern = DATE_PATTERN)
 	private LocalDateTime endTime;
 
+	@NotNull(message = "customer cannot be null")
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 
+	@NotNull(message = "barber cannot be null")
 	@ManyToOne
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
 
+	@NotNull(message = "services cannot be null")
 	@ManyToMany
 	@JoinTable(name = "Schedule_Service", joinColumns = @JoinColumn(name = "schedule_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private List<BarberShopService> services = new ArrayList<>();

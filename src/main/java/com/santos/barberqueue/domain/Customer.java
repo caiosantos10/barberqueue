@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Customer implements Serializable {
@@ -16,7 +18,11 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotNull(message = "name cannot be null")
+	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String name;
+	
 	private String nickname;
 
 	public Customer() {

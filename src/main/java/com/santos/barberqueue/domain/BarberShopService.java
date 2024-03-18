@@ -9,6 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Service")
@@ -19,8 +21,15 @@ public class BarberShopService implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotNull(message = "name cannot be null")
+	@Size(min = 3, max = 50, message = "name has to be min 3 and max 50")
 	private String name;
+	
+	@NotNull(message = "price cannot be null")
 	private Double price;
+	
+	@NotNull(message = "duration cannot be null")
 	private Duration duration;
 
 	public BarberShopService() {

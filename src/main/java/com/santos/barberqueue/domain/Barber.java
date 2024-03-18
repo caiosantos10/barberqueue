@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Barber implements Serializable {
@@ -21,10 +24,20 @@ public class Barber implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotNull(message = "name cannot be null")
+	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String name;
+	
+	@Email(message = "email is invalid")
+	@Size(min = 3, max = 30, message = "email has to be min 3 and max 30")
+	@NotNull(message = "email cannot be null")
 	private String email;
+
+	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String password;
 	
+	@NotNull(message = "services cannot be null")
 	@ManyToMany
 	@JoinTable(name = "Barber_ServicesOffered", joinColumns = @JoinColumn(name = "barber_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
 	private List<BarberShopService> servicesOffered = new ArrayList<>();
