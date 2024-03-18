@@ -45,6 +45,9 @@ public class Schedule implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
+	
+	@NotNull(message = "status cannot be null")
+	private boolean status;
 
 	@NotNull(message = "services cannot be null")
 	@ManyToMany
@@ -55,13 +58,14 @@ public class Schedule implements Serializable {
 
 	}
 
-	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber) {
+	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber, boolean status) {
 		super();
 		this.id = id;
 		setInitialTime(initialTime);
 		setEndTime(endTime);
 		this.customer = customer;
 		this.barber = barber;
+		this.status = status;
 	}
 
 	public Integer getId() {
@@ -108,6 +112,14 @@ public class Schedule implements Serializable {
 
 	public List<BarberShopService> getServices() {
 		return services;
+	}
+	
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public boolean getStatus() {
+		return status;
 	}
 
 	public void setServices(List<BarberShopService> services) {
