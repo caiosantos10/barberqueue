@@ -1,8 +1,6 @@
 package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -10,8 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -37,10 +34,9 @@ public class Barber implements Serializable {
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String password;
 	
-	@NotNull(message = "services cannot be null")
-	@ManyToMany
-	@JoinTable(name = "Barber_ServicesOffered", joinColumns = @JoinColumn(name = "barber_id"), inverseJoinColumns = @JoinColumn(name = "service_id"))
-	private List<BarberShopService> servicesOffered = new ArrayList<>();
+	@OneToOne
+	@JoinColumn(name="avaliability_id")
+	private Avaliability avaliability;
 
 	public Barber() {
 
@@ -84,15 +80,14 @@ public class Barber implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	public List<BarberShopService> getServicesOffered() {
-		return servicesOffered;
+
+	public Avaliability getAvaliability() {
+		return avaliability;
 	}
 
-	public void setServicesOffered(List<BarberShopService> servicesOffered) {
-		this.servicesOffered = servicesOffered;
+	public void setAvaliability(Avaliability avaliability) {
+		this.avaliability = avaliability;
 	}
-
 
 	@Override
 	public int hashCode() {
