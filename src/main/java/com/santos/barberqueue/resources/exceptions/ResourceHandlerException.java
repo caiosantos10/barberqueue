@@ -11,7 +11,6 @@ import com.santos.barberqueue.services.exceptions.DataIntegrityException;
 import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ResourceHandlerException {
@@ -39,13 +38,6 @@ public class ResourceHandlerException {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<StandardError> messageNotReadable(HttpMessageNotReadableException e, HttpServletRequest request) {
-		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
-				System.currentTimeMillis());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
-	}
-	
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<StandardError> messageNotReadable(ConstraintViolationException e, HttpServletRequest request) {
 		StandardError error = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
 				System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);

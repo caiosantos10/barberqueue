@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.santos.barberqueue.domain.Barber;
 import com.santos.barberqueue.services.BarberService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value="/barbers")
 public class BarberResource {
@@ -38,7 +40,7 @@ public class BarberResource {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody Barber barber) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody Barber barber) {
 		barber = service.insert(barber);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(barber.getId())
@@ -47,7 +49,7 @@ public class BarberResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@RequestBody Barber barber, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody Barber barber, @PathVariable Integer id) {
 		barber.setId(id);
 		barber = service.update(barber);
 		return ResponseEntity.noContent().build();

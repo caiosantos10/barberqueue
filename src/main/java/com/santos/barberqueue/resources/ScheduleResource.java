@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.santos.barberqueue.domain.Schedule;
 import com.santos.barberqueue.services.ScheduleService;
 
+import jakarta.validation.Valid;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value="/schedules")
@@ -45,7 +47,7 @@ public class ScheduleResource {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody Schedule schedule) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody Schedule schedule) {
 		schedule = service.insert(schedule);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(schedule.getId())
@@ -54,7 +56,7 @@ public class ScheduleResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@RequestBody Schedule schedule, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody Schedule schedule, @PathVariable Integer id) {
 		schedule.setId(id);
 		schedule = service.update(schedule);
 		return ResponseEntity.noContent().build();

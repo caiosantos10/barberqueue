@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.santos.barberqueue.domain.Customer;
 import com.santos.barberqueue.services.CustomerService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping(value="/customers")
 public class CustomerResource {
@@ -38,7 +40,7 @@ public class CustomerResource {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody Customer customer) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody Customer customer) {
 		customer = service.insert(customer);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(customer.getId())
@@ -47,7 +49,7 @@ public class CustomerResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@RequestBody Customer customer, @PathVariable Integer id) {
+	public ResponseEntity<Void> update(@Valid @RequestBody Customer customer, @PathVariable Integer id) {
 		customer.setId(id);
 		customer = service.update(customer);
 		return ResponseEntity.noContent().build();
