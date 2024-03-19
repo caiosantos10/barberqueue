@@ -23,6 +23,7 @@ public class Customer implements Serializable {
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String name;
 	
+	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String nickname;
 
 	public Customer() {
