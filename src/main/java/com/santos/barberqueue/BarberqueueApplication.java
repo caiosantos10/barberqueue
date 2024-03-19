@@ -7,10 +7,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.santos.barberqueue.domain.Avaliability;
 import com.santos.barberqueue.domain.Barber;
 import com.santos.barberqueue.domain.BarberShopService;
 import com.santos.barberqueue.domain.Customer;
 import com.santos.barberqueue.domain.Schedule;
+import com.santos.barberqueue.repositories.AvaliabilityRepository;
 import com.santos.barberqueue.repositories.BarberRepository;
 import com.santos.barberqueue.repositories.BarberShopServiceRepository;
 import com.santos.barberqueue.repositories.CustomerRepository;
@@ -27,6 +29,8 @@ public class BarberqueueApplication implements CommandLineRunner {
 	private CustomerRepository customerRepo;
 	@Autowired
 	private BarberShopServiceRepository barberShopServiceRepo;
+	@Autowired
+	private AvaliabilityRepository avaliabilityRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BarberqueueApplication.class, args);
@@ -43,7 +47,10 @@ public class BarberqueueApplication implements CommandLineRunner {
 		
 		Barber barber = new Barber(null, "Barbeiro Teste", "teste@teste.com", "123456");
 		
-		barber.setServicesOffered(Arrays.asList(service1, service2));;
+		Avaliability avaliability = new Avaliability();
+		avaliability.setServicesOffered(Arrays.asList(service1, service2));
+		
+		barber.setAvaliability(avaliability);
 		
 		Schedule sched1 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer1, barber, true);
 		Schedule sched2 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer2, barber, true);
@@ -55,6 +62,7 @@ public class BarberqueueApplication implements CommandLineRunner {
 
 		
 		barberShopServiceRepo.saveAll(Arrays.asList(service1, service2));
+		avaliabilityRepo.saveAll(Arrays.asList(avaliability));
 		barberRepo.saveAll(Arrays.asList(barber));
 		customerRepo.saveAll(Arrays.asList(customer1, customer2, customer3));
 		scheduleRepo.saveAll(Arrays.asList(sched1, sched2, sched3));
