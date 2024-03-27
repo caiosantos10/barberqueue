@@ -26,6 +26,9 @@ public class Barber implements Serializable {
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String name;
 	
+	@NotNull(message="cnpj cannot be null")
+	private String cnpj;
+	
 	@Email(message = "email is invalid")
 	@Size(min = 3, max = 30, message = "email has to be min 3 and max 30")
 	@NotNull(message = "email cannot be null")
@@ -42,9 +45,10 @@ public class Barber implements Serializable {
 
 	}
 
-	public Barber(Integer id, String name, String email, String password) {
+	public Barber(Integer id, String name, String cnpj, String email, String password) {
 		this.id = id;
 		this.name = name;
+		this.cnpj = cnpj;
 		this.email = email;
 		this.password = password;
 	}
@@ -61,9 +65,17 @@ public class Barber implements Serializable {
 		return name;
 	}
 
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	}
+	
+	public String getCnpj() {
+		return cnpj;
+	}
+
 	public void setName(String name) {
 		this.name = name;
-	}
+	}	
 
 	public String getEmail() {
 		return email;
