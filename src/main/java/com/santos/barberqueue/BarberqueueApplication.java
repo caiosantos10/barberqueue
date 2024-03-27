@@ -41,9 +41,9 @@ public class BarberqueueApplication implements CommandLineRunner {
 		BarberShopService service1 = new BarberShopService(null, "Cabelo", 50.00, 60);
 		BarberShopService service2 = new BarberShopService(null, "Barba", 15.00, 30);
 		
-		Customer customer1 = new Customer(null, "Caio Santos", "Caio");
-		Customer customer2 = new Customer(null, "Robson Santos", "Cacá");
-		Customer customer3 = new Customer(null, "Iuri Santos", "Iuri");
+		Customer customer1 = new Customer(null, "Caio Santos", "Caio", "caio@teste.com", "1234");
+		Customer customer2 = new Customer(null, "Robson Santos", "Cacá", "caca@teste.com", "1234");
+		Customer customer3 = new Customer(null, "Iuri Santos", "Iuri", "iuri@teste.com", "1234");
 		
 		Barber barber = new Barber(null, "Barbeiro Teste", "0000000000", "teste@teste.com", "123456");
 		

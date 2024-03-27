@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -25,15 +26,25 @@ public class Customer implements Serializable {
 	
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String nickname;
+	
+	@Email(message = "email is invalid")
+	@Size(min = 3, max = 30, message = "email has to be min 3 and max 30")
+	@NotNull(message = "email cannot be null")
+	private String email;
+
+	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
+	private String password;
 
 	public Customer() {
 
 	}
 
-	public Customer(Integer id, String name, String nickname) {
+	public Customer(Integer id, String name, String nickname, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.nickname = nickname;
+		this.email = email;
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -58,6 +69,22 @@ public class Customer implements Serializable {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@Override
