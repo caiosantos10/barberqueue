@@ -34,6 +34,7 @@ public class Barber implements Serializable {
 	@NotNull(message = "email cannot be null")
 	private String email;
 
+	@NotNull(message = "password cannot be null")
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
 	private String password;
 	
