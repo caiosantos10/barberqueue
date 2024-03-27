@@ -1,5 +1,6 @@
 package com.santos.barberqueue.services;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.santos.barberqueue.domain.Customer;
+import com.santos.barberqueue.dto.CustomerDTO;
 import com.santos.barberqueue.repositories.CustomerRepository;
 import com.santos.barberqueue.services.exceptions.DataIntegrityException;
 import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
@@ -34,9 +36,14 @@ public class CustomerService {
 		return repo.save(customer);
 	}
 
-	public Customer update(Customer customer) {
-		find(customer.getId());
-		return repo.save(customer);
+	public void update(Customer newCustomer) {
+		Customer customer = find(newCustomer.getId());
+		try {
+			updateData(customer, newCustomer);
+		} catch (IllegalAccessException e) {
+			throw new DataIntegrityException("Nâo foi possível atualizar os dados");
+		}
+		repo.save(newCustomer);
 	}
 
 	public void delete(Integer id) {
@@ -45,6 +52,24 @@ public class CustomerService {
 			repo.deleteById(id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir este Customer");
+		}
+	}
+
+	public Customer toCustomerFromDTO(CustomerDTO dto) {
+		return new Customer(dto.getId(), dto.getName(), dto.getNickname(), dto.getEmail(), dto.getPassword());
+	}
+
+	private void updateData(Customer customer, Customer newCustomer) throws IllegalAccessException {
+		Field[] fields = Customer.class.getDeclaredFields();
+
+		for (Field field : fields) {
+			field.setAccessible(true);
+			Object sourceData = field.get(customer);
+			Object targetData = field.get(newCustomer);
+
+			if (sourceData != null && targetData == null && !field.getName().equals("serialVersionUID")) {
+				field.set(newCustomer, sourceData);
+			}
 		}
 	}
 }

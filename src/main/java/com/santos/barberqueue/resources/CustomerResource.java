@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.santos.barberqueue.domain.Customer;
+import com.santos.barberqueue.dto.CustomerDTO;
 import com.santos.barberqueue.services.CustomerService;
 
 import jakarta.validation.Valid;
@@ -49,9 +50,10 @@ public class CustomerResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody Customer customer, @PathVariable Integer id) {
-		customer.setId(id);
-		customer = service.update(customer);
+	public ResponseEntity<Void> update(@Valid @RequestBody CustomerDTO dto, @PathVariable Integer id) {
+		dto.setId(id);
+		Customer customer = service.toCustomerFromDTO(dto);
+		service.update(customer);
 		return ResponseEntity.noContent().build();
 	}
 	
