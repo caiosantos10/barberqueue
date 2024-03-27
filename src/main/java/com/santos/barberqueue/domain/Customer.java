@@ -33,6 +33,7 @@ public class Customer implements Serializable {
 	private String email;
 
 	@Size(min = 3, max = 30, message = "name has to be min 3 and max 30")
+	@NotNull(message = "password cannot be null")
 	private String password;
 
 	public Customer() {
