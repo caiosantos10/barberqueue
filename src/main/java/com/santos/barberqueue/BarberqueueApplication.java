@@ -45,7 +45,7 @@ public class BarberqueueApplication implements CommandLineRunner {
 		Customer customer2 = new Customer(null, "Robson Santos", "Cacá", "caca@teste.com", "1234");
 		Customer customer3 = new Customer(null, "Iuri Santos", "Iuri", "iuri@teste.com", "1234");
 		
-		Barber barber = new Barber(null, "Barbeiro Teste", "0000000000", "teste@teste.com", "123456");
+		Barber barber = new Barber(null, "Barbeiro Teste", "00000000000000", "teste@teste.com", "123456");
 		
 		Avaliability avaliability = new Avaliability();
 		avaliability.setServicesOffered(Arrays.asList(service1, service2));

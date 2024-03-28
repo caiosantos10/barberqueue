@@ -27,6 +27,7 @@ public class Barber implements Serializable {
 	private String name;
 	
 	@NotNull(message="cnpj cannot be null")
+	@Size(min = 14, max = 14, message = "cnpj invalid")
 	private String cnpj;
 	
 	@Email(message = "email is invalid")
