@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.santos.barberqueue.domain.Barber;
+import com.santos.barberqueue.dto.BarberDTO;
 import com.santos.barberqueue.services.BarberService;
 
 import jakarta.validation.Valid;
@@ -49,9 +50,10 @@ public class BarberResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody Barber barber, @PathVariable Integer id) {
-		barber.setId(id);
-		barber = service.update(barber);
+	public ResponseEntity<Void> update(@Valid @RequestBody BarberDTO dto, @PathVariable Integer id) {
+		dto.setId(id);
+		Barber barber = service.toBarberFromDTO(dto);
+		service.update(barber);
 		return ResponseEntity.noContent().build();
 	}
 	
