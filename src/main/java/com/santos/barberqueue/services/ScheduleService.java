@@ -10,7 +10,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.santos.barberqueue.domain.Barber;
+import com.santos.barberqueue.domain.Customer;
 import com.santos.barberqueue.domain.Schedule;
+import com.santos.barberqueue.dto.ScheduleDTO;
 import com.santos.barberqueue.repositories.ScheduleRepository;
 import com.santos.barberqueue.services.exceptions.DataIntegrityException;
 import com.santos.barberqueue.services.exceptions.ObjectNotFoundException;
@@ -44,9 +47,11 @@ public class ScheduleService {
 	@Transactional
 	public Schedule insert(Schedule schedule) {
 		schedule.setId(null);
+		
+		this.customerService.find(schedule.getCustomer().getId());
+		this.barberService.find(schedule.getBarber().getId());
+		
 		this.barberShopService.insertAll(schedule.getServices());
-		this.barberService.insert(schedule.getBarber());
-		this.customerService.insert(schedule.getCustomer());
 		return repo.save(schedule);
 	}
 
@@ -67,9 +72,21 @@ public class ScheduleService {
 			throw new DataIntegrityException("Não é possível excluir este Schedule");
 		}
 	}
-	
+
 	public Page<Schedule> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+
+	public Schedule toScheduleFromDTO(ScheduleDTO dto) {
+		Schedule schedule = new Schedule(dto.getId(), dto.getInitialTime(), dto.getEndTime(), null, null, dto.getIsActive());
+		
+		Customer customer = this.customerService.find(dto.getCustomerId());
+		Barber barber = this.barberService.find(dto.getBarberId());
+		
+		schedule.setCustomer(customer);
+		schedule.setBarber(barber);
+		
+		return schedule;
 	}
 }

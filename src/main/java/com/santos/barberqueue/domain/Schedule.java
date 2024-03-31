@@ -2,7 +2,6 @@ package com.santos.barberqueue.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +45,8 @@ public class Schedule implements Serializable {
 	@JoinColumn(name = "barber_id")
 	private Barber barber;
 	
-	@NotNull(message = "status cannot be null")
-	private boolean status;
+	@NotNull(message = "isActive cannot be null")
+	private boolean isActive;
 
 	@NotNull(message = "services cannot be null")
 	@ManyToMany
@@ -58,14 +57,14 @@ public class Schedule implements Serializable {
 
 	}
 
-	public Schedule(Integer id, String initialTime, String endTime, Customer customer, Barber barber, boolean status) {
+	public Schedule(Integer id, LocalDateTime initialTime, LocalDateTime endTime, Customer customer, Barber barber, boolean isActive) {
 		super();
 		this.id = id;
-		setInitialTime(initialTime);
-		setEndTime(endTime);
+		this.initialTime = initialTime;
+		this.endTime = endTime;
 		this.customer = customer;
 		this.barber = barber;
-		this.status = status;
+		this.isActive = isActive;
 	}
 
 	public Integer getId() {
@@ -80,18 +79,16 @@ public class Schedule implements Serializable {
 		return initialTime;
 	}
 
-	public void setInitialTime(String initialTime) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-		this.initialTime = LocalDateTime.parse(initialTime, formatter);
+	public void setInitialTime(LocalDateTime initialTime) {
+		this.initialTime = initialTime;
 	}
 
 	public LocalDateTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(String endTime) {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
-		this.endTime = LocalDateTime.parse(endTime, formatter);
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
 	}
 
 	public Customer getCustomer() {
@@ -114,17 +111,18 @@ public class Schedule implements Serializable {
 		return services;
 	}
 	
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-
-	public boolean getStatus() {
-		return status;
-	}
-
 	public void setServices(List<BarberShopService> services) {
 		this.services = services;
 	}
+	
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public boolean getIsActive() {
+		return isActive;
+	}
+
 
 	@Override
 	public int hashCode() {
