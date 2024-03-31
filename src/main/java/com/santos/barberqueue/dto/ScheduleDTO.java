@@ -13,20 +13,20 @@ public class ScheduleDTO implements Serializable {
 	private LocalDateTime endTime;
 	private Integer customerId;
 	private Integer barberId;
-	private boolean status;
+	private boolean isActive;
 	private List<Integer> servicesIds = new ArrayList<>();
 	
 	public ScheduleDTO() {
 		
 	}
 
-	public ScheduleDTO(Integer id, LocalDateTime initialTime, LocalDateTime endTime, Integer customerId, Integer barberId, boolean status) {
+	public ScheduleDTO(Integer id, LocalDateTime initialTime, LocalDateTime endTime, Integer customerId, Integer barberId, boolean isActive) {
 		this.id = id;
 		this.initialTime = initialTime;
 		this.endTime = endTime;
 		this.customerId = customerId;
 		this.barberId = barberId;
-		this.status = status;
+		this.isActive = isActive;
 	}
 
 	public Integer getId() {
@@ -69,19 +69,19 @@ public class ScheduleDTO implements Serializable {
 		this.barberId = barberId;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean getIsActive() {
+		return isActive;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setStatus(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public List<Integer> getServicesIds() {
 		return servicesIds;
 	}
 
-	public void setServices(Integer servicesId) {
-		this.servicesIds.add(servicesId);
+	public void setServices(List<Integer> servicesIds) {
+		this.servicesIds = servicesIds;
 	}
 }

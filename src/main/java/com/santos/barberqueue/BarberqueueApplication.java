@@ -1,5 +1,7 @@
 package com.santos.barberqueue;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class BarberqueueApplication implements CommandLineRunner {
 	private BarberShopServiceRepository barberShopServiceRepo;
 	@Autowired
 	private AvaliabilityRepository avaliabilityRepo;
+	
+	private final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
 
 	public static void main(String[] args) {
 		SpringApplication.run(BarberqueueApplication.class, args);
@@ -52,9 +56,13 @@ public class BarberqueueApplication implements CommandLineRunner {
 		
 		barber.setAvaliability(avaliability);
 		
-		Schedule sched1 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer1, barber, true);
-		Schedule sched2 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer2, barber, true);
-		Schedule sched3 = new Schedule(null, "2020-12-12T11:30:00", "2020-12-12T11:30:00", customer3, barber, true);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_PATTERN);
+		LocalDateTime initialDate = LocalDateTime.parse("2020-12-12T11:30:00", formatter);
+		LocalDateTime endDate = LocalDateTime.parse("2020-12-12T12:30:00", formatter);
+		
+		Schedule sched1 = new Schedule(null, initialDate, endDate, customer1, barber, true);
+		Schedule sched2 = new Schedule(null, initialDate, endDate, customer2, barber, true);
+		Schedule sched3 = new Schedule(null, initialDate, endDate, customer3, barber, true);
 		
 		sched1.setServices(Arrays.asList(service1, service2));
 		sched2.setServices(Arrays.asList(service1));

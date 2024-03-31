@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.santos.barberqueue.domain.Schedule;
+import com.santos.barberqueue.dto.ScheduleDTO;
 import com.santos.barberqueue.services.ScheduleService;
 
 import jakarta.validation.Valid;
@@ -47,8 +48,9 @@ public class ScheduleResource {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Void> insert(@Valid @RequestBody Schedule schedule) {
-		schedule = service.insert(schedule);
+	public ResponseEntity<Void> insert(@Valid @RequestBody ScheduleDTO scheduleDTO) {
+		Schedule schedule = service.toScheduleFromDTO(scheduleDTO);
+		service.insert(schedule);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(schedule.getId())
 				.toUri();
