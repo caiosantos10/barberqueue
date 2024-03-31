@@ -1,5 +1,6 @@
 package com.santos.barberqueue.services;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,12 +57,14 @@ public class ScheduleService {
 	}
 
 	@Transactional
-	public Schedule update(Schedule schedule) {
-		find(schedule.getId());
-		this.barberShopService.updateAll(schedule.getServices());
-		this.barberService.update(schedule.getBarber());
-		this.customerService.update(schedule.getCustomer());
-		return repo.save(schedule);
+	public Schedule update(Schedule newSchedule) {
+		Schedule schedule = find(newSchedule.getId());
+		try {
+			updateData(schedule, newSchedule);
+		} catch (IllegalAccessException e) {
+			throw new DataIntegrityException("Não foi possível atualizar os dados");
+		}
+		return repo.save(newSchedule);
 	}
 
 	public void delete(Integer id) {
@@ -88,5 +91,19 @@ public class ScheduleService {
 		schedule.setBarber(barber);
 		
 		return schedule;
+	}
+	
+	private void updateData(Schedule schedule, Schedule newSchedule) throws IllegalAccessException {
+		Field[] fields = Schedule.class.getDeclaredFields();
+
+		for (Field field : fields) {
+			field.setAccessible(true);
+			Object sourceData = field.get(schedule);
+			Object targetData = field.get(newSchedule);
+
+			if (sourceData != null && targetData == null && !field.getName().equals("serialVersionUID")) {
+				field.set(newSchedule, sourceData);
+			}
+		}
 	}
 }

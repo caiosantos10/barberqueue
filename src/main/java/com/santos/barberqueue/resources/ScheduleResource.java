@@ -58,9 +58,10 @@ public class ScheduleResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@Valid @RequestBody Schedule schedule, @PathVariable Integer id) {
-		schedule.setId(id);
-		schedule = service.update(schedule);
+	public ResponseEntity<Void> update(@Valid @RequestBody ScheduleDTO scheduleDTO, @PathVariable Integer id) {
+		scheduleDTO.setId(id);
+		Schedule schedule = service.toScheduleFromDTO(scheduleDTO);
+		service.update(schedule);
 		return ResponseEntity.noContent().build();
 	}
 	
